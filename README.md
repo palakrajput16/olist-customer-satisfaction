@@ -68,6 +68,24 @@ pandas, numpy, matplotlib, seaborn, plotly, scipy, scikit-learn, jupyter
 - **Geolocation was aggregated** from ~1,000,163 raw lat/lng points down to one average coordinate per zip-code prefix before any geographic joins, since the raw table has many points per zip and would otherwise multiply row counts on merge.
 - **Reviews were deduplicated** to one row per `order_id` (keeping the earliest) before any merge, since a small number of orders had more than one review row.
 
+## Extensions
+
+- **NLP on negative reviews**: word-frequency analysis of 1-2 star review
+  text confirms the delivery-driven finding independently — "entregue,"
+  "chegou," "prazo," and "aguardando" (delivered, arrived, deadline,
+  waiting) dominate complaint language, alongside a secondary quality
+  theme ("qualidade").
+- **Multivariate predictive model**: a Random Forest predicting bad reviews
+  (≤2 stars) from delay, freight, price, and state achieves 86% accuracy
+  (40% recall on the minority class). Delivery delay alone accounts for
+  65.6% of the model's feature importance — more than freight, price, and
+  state combined — confirming the univariate finding holds even when every
+  other factor is considered simultaneously.
+- **Repeat customer cohort check**: of ~96,096 unique customers, only 2,951
+  (3.1%) placed a 2nd order. Among those, review scores are essentially flat
+  between 1st and 2nd orders (4.11 vs. 4.13) — no measurable satisfaction
+  decay with repeat purchases.
+
 ## Limitations
 
 - **No text analysis was performed** on the 58.7% of reviews that do have written comments. This leaves a real signal on the table — the *reasons* customers cite in their own words for 1-star reviews likely go beyond delivery alone (product quality, wrong item, customer service), and are not captured by the score-only analysis here.
